@@ -6,6 +6,7 @@ const wordDiv = document.getElementById('word-div');
 submitButton.addEventListener('click', () => {  
   const word = wordInput.value;  
   const apiUrl = `https://www.dictionaryapi.com/api/v3/references/learners/json/${word}?key=${apiKey}`;  
+  const apiUrL2 = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${apiKey}`;
   
   fetch(apiUrl)  
     .then(response => response.json())  
