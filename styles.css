@@ -1,0 +1,24 @@
+#input-div, #word-div {  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    height: 100vh;  
+  }  
+  #word-div {  
+    font-size: 2rem;  
+    margin-right: 1rem;  
+  }  
+  #audio-button {  
+    margin-left: 1rem;  
+    padding: 0.5rem;  
+    background-color: lightgray;  
+    border: none;  
+    border-radius: 0.5rem;  
+    cursor: pointer;  
+    font-size: 1rem;  
+  }  
+  #audio-button:hover {  
+    background-color: gray;  
+    color: white;  
+  }  
+  
