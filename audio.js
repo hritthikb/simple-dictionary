@@ -7,6 +7,8 @@ submitButton.addEventListener('click', () => {
   const word = wordInput.value;  
   const apiUrl = `https://www.dictionaryapi.com/api/v3/references/learners/json/${word}?key=${apiKey}`;  
   const apiUrL2 = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${apiKey}`;
+  const meriamApiURL =`https://dictionaryapi.com/account/${word}?key=88caf404-f80f-432a-bbbe-916cfb3d3ae2`;
+
   
   fetch(apiUrl)  
     .then(response => response.json())  
