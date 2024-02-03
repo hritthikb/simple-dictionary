@@ -1,18 +1,24 @@
-<!DOCTYPE html>  
-<html>  
-<head>  
-  <title>Dictionary App</title>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <link rel="stylesheet" href="styles.css">  
-</head>  
-<body>  
-  <div id="input-div">  
-    <label for="word-input">Enter a word:</label>  
-    <input id="word-input" type="text" placeholder="e.g. example">  
-    <button id="submit-button">Submit</button>  
-  </div>  
-  <div id="word-div"></div>  
-  <script src="audio.js"></script>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html>
+<head>
+    <title>my dictionary</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="display-header">
+        <h1>hritthik's dictionary</h1>
+    </div>
+    <div id="input-div">
+        <input id="word-input" type="text" placeholder="Enter a word">
+        <button id="submit-button">Submit</button>
+        <button id="refresh-button">Refresh</button>
+    </div>
+    <div id="word-div">
+        <span id="word-span"></span>
+        <button id="audio-button">🔊</button>
+        
+    </div>
+    <div id="definition-div"></div>
+    <script src="audio.js"></script>
+</body>
+</html>

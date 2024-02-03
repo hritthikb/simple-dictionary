@@ -1,30 +1,49 @@
-const apiKey = '';  
-const wordInput = document.getElementById('word-input');  
-const submitButton = document.getElementById('submit-button');  
-const wordDiv = document.getElementById('word-div');  
-  
-submitButton.addEventListener('click', () => {  
-  const word = wordInput.value;  
-  const apiUrl = `https://www.dictionaryapi.com/api/v3/references/learners/json/${word}?key=${apiKey}`;  
-  const apiUrL2 = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${apiKey}`;
-  const meriamApiURL =`https://dictionaryapi.com/account/${word}?key=88caf404-f80f-432a-bbbe-916cfb3d3ae2`;
+const wordInput = document.getElementById('word-input');
+const submitButton = document.getElementById('submit-button');
+const refreshButton = document.getElementById('refresh-button');
+const wordSpan = document.getElementById('word-span');
+const audioButton = document.getElementById('audio-button');
+const definitionDiv = document.getElementById('definition-div');
 
-  
-  fetch(apiUrl)  
-    .then(response => response.json())  
-    .then(data => {  
-      const audioUrl = data[0].hwi.prs[0].sound.audio[0];  
-      const audioButton = document.createElement('button');  
-      audioButton.id = 'audio-button';  
-      audioButton.innerText = 'Listen';  
-      audioButton.addEventListener('click', () => {  
-        const audioElement = new Audio(`https://media.merriam-webster.com/soundc11/${audioUrl[0]}/${audioUrl}`);  
-        audioElement.play();  
-      });  
-      const wordText = document.createTextNode(word);  
-      wordDiv.innerHTML = '';  
-      wordDiv.appendChild(wordText);  
-      wordDiv.appendChild(audioButton);  
-    })  
-    .catch(error => console.error(error));  
-});  
+audioButton.style.display = 'none';  // Hide the audio button initially
+
+submitButton.addEventListener('click', () => {
+    const word = wordInput.value;
+    const wordFromServer = `http://localhost:3000/word/${word}`;
+
+    fetch(wordFromServer)
+        .then(response => response.json())
+        .then(data => {
+            const audioUrl = data.audioUrl;
+            const subdirectory = audioUrl.startsWith('bix') ? 'bix' : audioUrl.startsWith('gg') ? 'gg' : audioUrl[0];
+            audioButton.style.display = 'inline';  // Show the audio button
+            audioButton.addEventListener('click', () => {
+                const audioElement = new Audio(`https://media.merriam-webster.com/soundc11/${subdirectory}/${audioUrl}.wav`);
+                audioElement.play();
+            });
+            wordSpan.textContent = word;
+            definitionDiv.textContent = data.definition;
+        })
+        .catch(error => console.error(error))
+        .finally(() => {
+            // Disable the submit button after the fetch operation is complete
+            submitButton.disabled = true;
+        });
+});
+
+refreshButton.addEventListener('click', () => {
+    // Clear the input field
+    wordInput.value = '';
+
+    // Hide the audio button
+    audioButton.style.display = 'none';
+
+    // Clear the word and definition fields
+    wordSpan.textContent = '';
+    definitionDiv.textContent = '';
+
+    // Enable the submit button
+    submitButton.disabled = false;
+});
+
+
