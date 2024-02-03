@@ -5,6 +5,7 @@ const wordSpan = document.getElementById('word-span');
 const audioButton = document.getElementById('audio-button');
 const definitionDiv = document.getElementById('definition-div');
 
+let playAudio = () => { };
 audioButton.style.display = 'none';  // Hide the audio button initially
 
 submitButton.addEventListener('click', () => {
@@ -17,12 +18,18 @@ submitButton.addEventListener('click', () => {
             const audioUrl = data.audioUrl;
             const subdirectory = audioUrl.startsWith('bix') ? 'bix' : audioUrl.startsWith('gg') ? 'gg' : audioUrl[0];
             audioButton.style.display = 'inline';  // Show the audio button
-            audioButton.addEventListener('click', () => {
+
+            // Define the function that plays the audio
+            playAudio = () => {
                 const audioElement = new Audio(`https://media.merriam-webster.com/soundc11/${subdirectory}/${audioUrl}.wav`);
                 audioElement.play();
-            });
+            };
+
+            // Add the event listener to the audio button
+            audioButton.addEventListener('click', playAudio);
+
             wordSpan.textContent = word;
-            definitionDiv.textContent = data.definition;
+            definitionDiv.textContent = data.shortdef[0]; // shortdef is an array, so we take the first element
         })
         .catch(error => console.error(error))
         .finally(() => {
@@ -35,8 +42,9 @@ refreshButton.addEventListener('click', () => {
     // Clear the input field
     wordInput.value = '';
 
-    // Hide the audio button
+    // Hide the audio button and remove the old event listener
     audioButton.style.display = 'none';
+    audioButton.removeEventListener('click', playAudio);
 
     // Clear the word and definition fields
     wordSpan.textContent = '';
